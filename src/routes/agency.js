@@ -1,23 +1,8 @@
 const router = require('express').Router();
-const Agency = require('../models/agency/model');
+const { getAgencies, createAgency } = require('../controllers/agency');
 
-router.get('/agency', async (req, res) => {
-  try {
-    const agency = await Agency.find({});
-    return res.status(200).json(agency);
-  } catch (error) {
-    return res.status(500).json({ Message: 'Somethin went wrong' });
-  }
-});
+router.get('/agency', getAgencies);
 
-router.post('/agency', (req, res) => {
-  const agency = new Agency(req.body);
-  try {
-    agency.save();
-    return res.json({ Message: 'Agency created' });
-  } catch (error) {
-    return res.status(500).json({ Message: 'Somethin went wrong' });
-  }
-});
+router.post('/agency', createAgency);
 
 module.exports = router;
