@@ -1,4 +1,6 @@
 const bookingModel = require('../models/booking/model');
+const roomModel = require('../models/room/model');
+const {formatBookingResponse,formatRoomResponse }= require('../helpers/roomHelper');
 
 const getRooms = async (req, res) => {
   try {
@@ -9,33 +11,31 @@ const getRooms = async (req, res) => {
         populate: [{ path: 'location' }, { path: 'agency' }],
       },
     ]);
-    const filterRooms = rooms.filter(
-      (room) => room.id_room.location.code === location
-    );
-    rooms = filterRooms.map((room) => ({
-      id: room.id_room.id,
-      thumbnail: room.id_room.tumbnails,
-      location: {
-        latitude: room.id_room.location.latitude,
-        longitude: room.id_room.location.longitude,
-        code: room.id_room.location.code,
-        name: room.id_room.location.name,
-      },
-      price: room.id_room.price,
-      currency: room.id_room.currency,
-      agency: {
-        name: room.id_room.agency.name,
-        id: room.id_room.agency._id,
-      },
-      property_name: room.id_room.property_name,
-      rating: room.id_room.location.rating,
-    }));
+    rooms = formatBookingResponse(rooms, location);
     return res.status(200).json(rooms);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ Message: 'Something went wrong' });
   }
 };
+
+const getRoomById = async (req,res)=>{
+  const {id}= req.params;
+  try {
+    const response = await roomModel.findById({_id: id}).populate([
+         { path: 'location' }, { path: 'agency' }
+    ]);
+    console.log(response);
+    if (response){
+      const room =  formatRoomResponse(response);
+      return res.status(200).json(room) 
+    }
+    return res.status(400).json({ Message: 'Room not found ' })
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ Message: 'Something went wrong' });
+  }
+}
 
 const createRoom = (req, res) => {
   try {
@@ -50,4 +50,5 @@ const createRoom = (req, res) => {
 module.exports = {
   getRooms,
   createRoom,
+  getRoomById
 };
