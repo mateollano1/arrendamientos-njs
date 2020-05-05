@@ -11,6 +11,7 @@ const roomSchema = new Schema({
     rating: { type: Number },
     agency: { type: Schema.Types.ObjectId, ref: "Agency" },
     location: { type: Schema.Types.ObjectId, ref: "Location"}
+    //,services: [{ type: String }]
 });
 
 module.exports = mongoose.model("Room", roomSchema);

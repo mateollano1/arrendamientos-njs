@@ -18,7 +18,8 @@ app.listen(4000, () => {
   console.log('Server running on port 4000');
   mongoose
     .connect(
-      'mongodb://localhost/arrendamientos',
+      'mongodb+srv://empresariales:empresariales@cluster0-7jtxs.mongodb.net/test?retryWrites=true&w=majority',
+//      'mongodb://localhost/arrendamientos',
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
