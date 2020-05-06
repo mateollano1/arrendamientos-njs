@@ -9,6 +9,13 @@ let create = (booking) => {
 }
 
 
+const getBooking = async (checkin, checkout) => {
+    const booking = await Booking.find({'checkin' : {'$lte': checkin },'checkout' : {'$gte': checkout }},'id_room');
+    return booking
+}
+
+
 module.exports = {
-    create: create
+    create: create,
+    getBooking
 }
