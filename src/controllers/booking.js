@@ -1,17 +1,23 @@
 var service = require('../services/booking');
 const emailService = require('../services/email')
+const validate = require('../helpers/datesHelpers')
 
 let post = async(req, res) => {
     let booking = req.body;
-    await service.create(booking).then(
-        data => {
-            emailService.sendMail(booking)
-            return res.json(data)
-        }, err => {
-            console.log("err");
-            return res.json(err)
-        }
-    );
+    let validation = await validate.validateDates(req.body.checkin, req.body.checkout)
+    if (validation) {
+        await service.create(booking).then(
+            data => {
+                emailService.sendMail(booking)
+                return res.json(data)
+            }, err => {
+                console.log("err");
+                return res.json(err)
+            }
+        );
+    } else {
+        res.status(400).send({ error: 'Inconsistencia en datos ingresados' });
+    }
 };
 
 module.exports = {
