@@ -1,6 +1,13 @@
+const dotenv = require('dotenv').config();
+
+const PORT = dotenv.parsed.PORT;
+const MONGODB = dotenv.parsed.MONGODB;
+const USERMAIL = dotenv.parsed.USERMAIL;
+const PASSWORD = dotenv.parsed.PASSWORD;
+
 module.exports = {
-    PORT: process.env.PORT | 3000,
-    MONGODB: "mongodb://localhost/arrendamientos",
-    USERMAIL: 'arrendamientosnjs@gmail.com',
-    PASSWORD: 'appempresariales'
+    PORT: PORT,
+    MONGODB: MONGODB,
+    USERMAIL: USERMAIL,
+    PASSWORD: PASSWORD
 }

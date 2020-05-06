@@ -2,6 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const config = require('../config/config');
 
 const routes = require('./routes');
 
@@ -14,11 +15,11 @@ app.use(express.json());
 
 app.use('/api', routes)
 
-app.listen(4000, () => {
-  console.log('Server running on port 4000');
+app.listen(config.PORT, () => {
+  console.log(`Server running on port ${config.PORT}`);
   mongoose
     .connect(
-      'mongodb://localhost/arrendamientos',
+      config.MONGODB,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
