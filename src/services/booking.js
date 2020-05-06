@@ -10,7 +10,36 @@ let create = (booking) => {
 
 
 const getBooking = async (checkin, checkout) => {
-    const booking = await Booking.find({'checkin' : {'$lte': checkin },'checkout' : {'$gte': checkout }},'id_room');
+    checkin = new Date(checkin);
+    checkout = new Date(checkout);
+    const booking = await Booking.find(
+        { $or: 
+            [ 
+                { $and: 
+                    [
+                        { "checkin": { $lte:  checkin } }, 
+                        { "checkout": { $gte: checkin } }
+                    ]
+                },
+                { $and: 
+                    [
+                        { "checkin": { $lte: checkout } }, 
+                        { "checkout": { $gte: checkout } }
+                    ]
+                },
+                { $and: [
+                        { "checkin": { $gte: checkin } },
+                        { "checkout": { $lte: checkout } },
+                    ]
+                },
+                { $and: [
+                        { "checkin": { $lte: checkin } },
+                        { "checkout": { $gte: checkout } },
+                    ]
+                }
+            ]
+        }
+        ,'id_room');
     return booking
 }
 
@@ -19,3 +48,4 @@ module.exports = {
     create: create,
     getBooking
 }
+

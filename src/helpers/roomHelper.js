@@ -16,8 +16,8 @@ const formatRoomResponse= (response)=>{
         logo_url: response.agency.logo
       },
       property_name:response.property_name,
-      rating: response.rating
-      //,services: response.services
+      rating: response.rating,
+      services: response.services
 
     }
 
@@ -26,7 +26,7 @@ const formatRoomResponse= (response)=>{
 const formatBookingResponse = (rooms)=>{
   return filterRooms(rooms).map((room) => ({
       id: room.id,
-      thumbnail: room.tumbnails,
+      thumbnail: room.thumbnail,
       location: {
         latitude: room.location.latitude,
         longitude: room.location.longitude,
@@ -40,7 +40,7 @@ const formatBookingResponse = (rooms)=>{
         id: room.agency._id,
       },
       property_name: room.property_name,
-      rating: room.location.rating,
+      rating: room.rating,
     }));
 }
 

@@ -1,7 +1,9 @@
 const Room = require('../models/room/model');
 
 const getRooms = async (location,booking) => {
-    const rooms = await Room.find({ _id: { $nin : booking } }).populate('location',null,{code: location });
+    const rooms = await Room.find({ _id: { $nin : booking } })
+                            .populate('location',null,{code: location })
+                            .populate('agency');
     return rooms
 }
 

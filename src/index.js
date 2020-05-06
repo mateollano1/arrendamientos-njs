@@ -13,7 +13,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
-app.use('/api', routes)
+app.use('/api', routes);
 
 app.listen(config.PORT, () => {
   console.log(`Server running on port ${config.PORT}`);

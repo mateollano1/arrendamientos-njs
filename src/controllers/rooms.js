@@ -9,7 +9,7 @@ const getRooms = async (req, res) => {
     if(checkin<checkout){
       let booking = await getBooking(checkin, checkout);
       booking =formatFilter(booking);  
-      let rooms = await roomService.getRooms(location,booking)
+      let rooms = await roomService.getRooms(location,booking);
       if(rooms.length!==0){  
         rooms = formatBookingResponse(rooms);
           if(rooms.length!==0){ 
@@ -43,7 +43,8 @@ const getRoomById = async (req,res)=>{
 const createRoom = async (req, res) => {
   try {
     const room = await roomService.createRoom(req.body);
-    return res.status(200).json({ Message: 'Room created' });
+
+    return res.status(200).json(room);
   } catch (error) {
     return res.status(500).json({ Message: 'Something went wrong' });
   }
