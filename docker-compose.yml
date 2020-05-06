@@ -1,0 +1,23 @@
+version: "3.7"
+services: 
+    mongo-image:
+        image: mongo:3.6.18
+        restart: always
+        volumes:
+            - ./data:/data/db
+        networks: 
+            - backend
+    arrendamientos:
+        build: 
+            context: .
+        restart: always
+        environment: 
+            - MONGODB=mongodb://mongo-image/arrendamientos
+        links: 
+            - mongo-image
+        ports: 
+            - "8080:5200"
+        networks:
+            - backend
+networks:
+    backend:
