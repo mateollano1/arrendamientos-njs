@@ -6,7 +6,7 @@ getDays = (checkin, checkout) => {
 }
 getFormatDate = (date) => {
     let check = new Date(date);
-    return `${check.getDate()}/${check.getMonth()}/${check.getFullYear()}`
+    return `${check.getDate()}/${check.getMonth()+1}/${check.getFullYear()}`
 }
 
 module.exports = { getDays, getFormatDate }
