@@ -1,6 +1,7 @@
 var service = require('../services/booking');
-const emailService = require('../services/email')
-const validate = require('../helpers/datesHelpers')
+const emailService = require('../services/email');
+const validate = require('../helpers/datesHelpers');
+const {formatBookingResponse} = require('../helpers/bookingHelper');
 
 let post = async(req, res) => {
     let booking = req.body;
@@ -9,6 +10,7 @@ let post = async(req, res) => {
         await service.create(booking).then(
             data => {
                 emailService.sendMail(booking)
+                data = formatBookingResponse(data);
                 return res.json(data)
             }, err => {
                 console.log("err");
