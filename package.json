@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose --coverage",
     "dev": "nodemon src/index.js"
   },
   "keywords": [],
@@ -20,6 +20,7 @@
     "pug": "^2.0.4"
   },
   "devDependencies": {
+    "jest": "^26.0.1",
     "nodemon": "^2.0.3"
   }
 }
