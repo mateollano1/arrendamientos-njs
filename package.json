@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose --coverage --runInBand --testTimeout=6000",
+    "test": "jest --verbose --coverage --runInBand --testTimeout=7000",
     "dev": "nodemon src/index.js"
   },
   "keywords": [],
