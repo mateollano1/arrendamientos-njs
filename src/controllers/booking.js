@@ -11,10 +11,10 @@ let post = async(req, res) => {
             data => {
                 emailService.sendMail(booking)
                 data = formatBookingResponse(data);
-                return res.json(data)
+                return res.status(200).json(data)
             }, err => {
                 console.log("err");
-                return res.json(err)
+                return res.status(400).json(err)
             }
         );
     } else {
@@ -22,6 +22,18 @@ let post = async(req, res) => {
     }
 };
 
+let getBookings = async (req, res) => {
+    let email = req.params.email;
+    let bookings = await service.getBookingsByEmail(email);
+
+    if(bookings && bookings.length > 0){
+        // llamar los helpers
+        return res.status(200).json(bookings);
+    }
+    return res.status(400).json({ error: 'Inconsistencia en datos ingresados' });
+}
+
 module.exports = {
-    post
+    post,
+    getBookings
 }

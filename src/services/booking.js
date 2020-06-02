@@ -8,6 +8,10 @@ let create = (booking) => {
         .catch(err => err);
 }
 
+let getBookingsByEmail = async (email) => {
+    return await Booking.find({ "email": email}).populate('id_room');
+}
+
 
 const getBooking = async (checkin, checkout) => {
     checkin = new Date(checkin);
@@ -46,6 +50,7 @@ const getBooking = async (checkin, checkout) => {
 
 module.exports = {
     create: create,
-    getBooking
+    getBooking, 
+    getBookingsByEmail
 }
 

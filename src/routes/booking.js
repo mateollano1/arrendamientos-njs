@@ -3,5 +3,6 @@ const booking = require('../controllers/booking');
 const auth = require('../controllers/auth');
 
 router.post('/', auth.checkAuth, booking.post);
+router.get('/:email', booking.getBookings);
 
 module.exports = router;
