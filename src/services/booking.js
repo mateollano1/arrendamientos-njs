@@ -8,49 +8,47 @@ let create = (booking) => {
         .catch(err => err);
 }
 
-let getBookingsByEmail = async (email) => {
-    return await Booking.find({ "email": email}).populate('id_room');
+let getBookingsByEmail = async(email) => {
+    return await Booking.find({ "email": email }).populate({ path: 'id_room', populate: [{ path: 'agency' }, { path: 'location' }] });
 }
 
 
-const getBooking = async (checkin, checkout) => {
+const getBooking = async(checkin, checkout) => {
     checkin = new Date(checkin);
     checkout = new Date(checkout);
-    const booking = await Booking.find(
-        { $or: 
-            [ 
-                { $and: 
-                    [
-                        { "checkin": { $lte:  checkin } }, 
-                        { "checkout": { $gte: checkin } }
-                    ]
-                },
-                { $and: 
-                    [
-                        { "checkin": { $lte: checkout } }, 
-                        { "checkout": { $gte: checkout } }
-                    ]
-                },
-                { $and: [
-                        { "checkin": { $gte: checkin } },
-                        { "checkout": { $lte: checkout } },
-                    ]
-                },
-                { $and: [
-                        { "checkin": { $lte: checkin } },
-                        { "checkout": { $gte: checkout } },
-                    ]
-                }
-            ]
-        }
-        ,'id_room');
+    const booking = await Booking.find({
+        $or: [{
+                $and: [
+                    { "checkin": { $lte: checkin } },
+                    { "checkout": { $gte: checkin } }
+                ]
+            },
+            {
+                $and: [
+                    { "checkin": { $lte: checkout } },
+                    { "checkout": { $gte: checkout } }
+                ]
+            },
+            {
+                $and: [
+                    { "checkin": { $gte: checkin } },
+                    { "checkout": { $lte: checkout } },
+                ]
+            },
+            {
+                $and: [
+                    { "checkin": { $lte: checkin } },
+                    { "checkout": { $gte: checkout } },
+                ]
+            }
+        ]
+    }, 'id_room');
     return booking
 }
 
 
 module.exports = {
     create: create,
-    getBooking, 
+    getBooking,
     getBookingsByEmail
 }
-

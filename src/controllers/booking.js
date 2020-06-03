@@ -1,7 +1,7 @@
 var service = require('../services/booking');
 const emailService = require('../services/email');
 const validate = require('../helpers/datesHelpers');
-const {formatBookingResponse} = require('../helpers/bookingHelper');
+const { formatBookingResponse, formatBooking } = require('../helpers/bookingHelper');
 
 let post = async(req, res) => {
     let booking = req.body;
@@ -22,12 +22,15 @@ let post = async(req, res) => {
     }
 };
 
-let getBookings = async (req, res) => {
+let getBookings = async(req, res) => {
     let email = req.params.email;
     let bookings = await service.getBookingsByEmail(email);
 
-    if(bookings && bookings.length > 0){
+    if (bookings && bookings.length > 0) {
         // llamar los helpers
+        bookings = bookings.map(data => {
+            return formatBooking(data)
+        })
         return res.status(200).json(bookings);
     }
     return res.status(400).json({ error: 'Inconsistencia en datos ingresados' });
