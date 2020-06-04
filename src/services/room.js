@@ -18,8 +18,6 @@ const getRoomById = async (id)=>{
 const createRoom = (room) => {
     let rom = new Room(room);
     return rom.save()
-        .then(room => room)
-        .catch(err => err);
 }
 
 module.exports = {
