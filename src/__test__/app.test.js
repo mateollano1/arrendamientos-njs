@@ -1,3 +1,4 @@
+'esversion: 8'
 const app = require('../app');
 const supertest = require('supertest');
 const request = supertest(app);
@@ -28,7 +29,7 @@ describe("test endpoint rooms", () => {
     })
     test('get the endpoint rooms/search with no rooms in location', async done => {
         const response = await request.get('/api/rooms/search?location=SLD&checkin=2020-06-16&checkout=2020-06-20');
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(200);
         expect(response.type).toBe('application/json');
         expect(response.body).not.toBeNull();
         expect(response.body.Message).toBe("Room not found ")
@@ -52,7 +53,7 @@ describe("test endpoint rooms", () => {
     })
     test('get the endpoint rooms ', async done => {
         const response = await request.get('/api/rooms/5ed540c7d109422e4cbb9190');
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(404);
         expect(response.type).toBe('application/json');
         expect(response.body).not.toBeNull();
         expect(response.body.Message).toBe("Room not found ")
@@ -71,12 +72,12 @@ describe("test endpoint rooms", () => {
             location: "5ed53f3ed109422e4cbb9197",
             services: ["Wifi", "TV", "Cocina"]
         })
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(201);
         expect(response.type).toBe('application/json');
         expect(response.body).not.toBeNull();
         done();
-    })
-    test('post the endpoint rooms/create with empty location ', async done => {
+    });
+    test('post the endpoint rooms/create with empty location ', async (done) => {
         const response = await request.post('/api/rooms/create').send({
             currency: "COP",
             description: "Casa con vista al mar",
