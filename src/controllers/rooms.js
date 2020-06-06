@@ -17,9 +17,9 @@ const getRooms = async (req, res) => {
           return res.status(200).json(rooms);
         }
       }
-      return res.status(400).json({ Message: 'Room not found ' });
+      return res.status(200).json([]);
     }
-    return res.status(401).json({ Message: 'Inconsistencia en las fechas ingresadas.' });
+    return res.status(400).json({ Message: 'Inconsistencia en las fechas ingresadas.' });
   } catch (error) {
     return res.status(500).json({ Message: 'Something went wrong' });
   }
@@ -33,7 +33,7 @@ const getRoomById = async (req, res) => {
       response = formatRoomResponse(response);
       return res.status(200).json(response);
     }
-    return res.status(400).json({ Message: 'Room not found ' });
+    return res.status(404).json({ Message: 'Room not found ' });
   } catch (error) {
     return res.status(500).json({ Message: 'Something went wrong' });
   }
@@ -42,8 +42,7 @@ const getRoomById = async (req, res) => {
 const createRoom = async (req, res) => {
   try {
     const room = await roomService.createRoom(req.body);
-
-    return res.status(200).json(room);
+    return res.status(201).json(room);
   } catch (error) {
     return res.status(500).json({ Message: 'Something went wrong' });
   }
