@@ -21,7 +21,7 @@ describe("test endpoint rooms", () => {
     })
     test('get the endpoint rooms/search with invalid range of dates', async done => {
         const response = await request.get('/api/rooms/search?location=MDE&checkin=2020-06-16&checkout=2020-06-10');
-        expect(response.status).toBe(401);
+        expect(response.status).toBe(400);
         expect(response.type).toBe('application/json');
         expect(response.body).not.toBeNull();
         expect(response.body.Message).toBe("Inconsistencia en las fechas ingresadas.")
@@ -32,7 +32,6 @@ describe("test endpoint rooms", () => {
         expect(response.status).toBe(200);
         expect(response.type).toBe('application/json');
         expect(response.body).not.toBeNull();
-        expect(response.body.Message).toBe("Room not found ")
         done();
     })
     test('get the endpoint rooms ', async done => {
