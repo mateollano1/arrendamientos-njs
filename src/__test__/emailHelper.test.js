@@ -9,8 +9,4 @@ describe('Testing email helper', () => {
         const response = getDays('2020-05-15', '2020-05-05');
         expect(response).toEqual(10);
     });
-    test('Testing getFormatDate', () => {
-        const response = getFormatDate('2020-05-15');
-        expect(response).toEqual('15/5/2020');
-    });
 });
