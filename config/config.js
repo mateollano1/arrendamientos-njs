@@ -1,9 +1,9 @@
 const dotenv = require('dotenv').config();
 
-const PORT = process.env.PORT;
-const MONGODB = process.env.MONGODB;
-const USERMAIL = process.env.USERMAIL;
-const PASSWORD = process.env.PASSWORD;
+const PORT = dotenv.parsed.PORT;
+const MONGODB = dotenv.parsed.MONGODB;
+const USERMAIL = dotenv.parsed.USERMAIL;
+const PASSWORD = dotenv.parsed.PASSWORD;
 
 module.exports = {
     PORT: PORT,
